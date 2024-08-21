@@ -4,15 +4,11 @@ import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ProducerService } from '../producer/producer.service';
 import { faker } from '@faker-js/faker';
 
 @Injectable()
-export class UsersService {
-  constructor(
-    private prisma: PrismaService,
-    private readonly producerService: ProducerService,
-  ) {}
+export class UserService {
+  constructor(private prisma: PrismaService) {}
   // create(createUserDto: CreateUserDto) {
   //   return 'This action adds a new user';
 
@@ -25,15 +21,23 @@ export class UsersService {
       data: {
         ...userCreateArgs,
         password: hashedPassword,
-        userDetail: {
-          create: {
-            avatarPath: faker.image.avatarGitHub(),
-          },
-        },
       },
     });
 
-    await this.producerService.sendUserCreatedEvent(createdUser);
+    if (createdUser.role === 'MANAGER') {
+      await this.prisma.manager.create({
+        data: {
+          id: createdUser.id,
+        },
+      });
+    }
+    if (createdUser.role === 'OWNER') {
+      await this.prisma.owner.create({
+        data: {
+          id: createdUser.id,
+        },
+      });
+    }
 
     return createdUser;
   }
@@ -48,7 +52,16 @@ export class UsersService {
         id: id,
       },
       include: {
-        userDetail: true,
+        manager: {
+          include: {
+            cafe: true,
+          },
+        },
+        owner: {
+          include: {
+            cafe: true,
+          },
+        },
       },
     });
   }

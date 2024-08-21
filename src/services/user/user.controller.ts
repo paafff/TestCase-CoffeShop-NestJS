@@ -8,29 +8,29 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { UserService } from './user.service';
 import { JwtGuard } from '../auth/guards/jwt-auth.guard';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
-export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+export class UserController {
+  constructor(private readonly userService: UserService) {}
 
   @UseGuards(JwtGuard)
   @Get()
   async findMany() {
-    return await this.usersService.findMany();
+    return await this.userService.findMany();
   }
 
   @UseGuards(JwtGuard)
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    return await this.usersService.findOne(id);
+    return await this.userService.findOne(id);
   }
 
   @UseGuards(JwtGuard)
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return await this.usersService.updateOne(id, updateUserDto);
+    return await this.userService.updateOne(id, updateUserDto);
   }
 }

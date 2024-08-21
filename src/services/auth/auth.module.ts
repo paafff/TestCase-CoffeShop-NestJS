@@ -5,7 +5,7 @@ import { LocalStrategy } from './strategies/local-strategy';
 import { JwtStrategy } from './strategies/jwt-strategy';
 import { RefreshJwtStrategy } from './strategies/refreshToken.strategy';
 import { AuthController } from './auth.controller';
-import { UsersModule } from '../user/users.module';
+import { UsersModule } from '../user/user.module';
 import { PrismaModule } from '../prisma/prisma.module';
 
 @Module({

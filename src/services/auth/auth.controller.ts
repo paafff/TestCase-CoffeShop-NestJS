@@ -6,13 +6,13 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { RefreshJwtGuard } from './guards/refresh-jwt-auth.guard';
 import { RefreshJwtStrategy } from './strategies/refreshToken.strategy';
 import { Prisma, User } from '@prisma/client';
-import { UsersService } from '../user/users.service';
+import { UserService } from '../user/user.service';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private authService: AuthService,
-    private userService: UsersService,
+    private userService: UserService,
   ) {}
 
   @UseGuards(LocalAuthGuard)

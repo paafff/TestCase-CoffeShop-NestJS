@@ -1,4 +1,4 @@
-import { GenderEnum, Prisma, PrismaClient } from '@prisma/client';
+import { GenderEnum, Prisma, PrismaClient, RoleEnum } from '@prisma/client';
 import { join } from 'path';
 import * as fs from 'fs/promises';
 import { faker } from '@faker-js/faker';
@@ -22,6 +22,8 @@ export async function Seeds() {
       username: username,
       password: hashedPassword,
       gender: faker.helpers.objectValue(GenderEnum),
+      role: RoleEnum.MANAGER,
+      fullName: faker.person.fullName(),
     };
   });
 

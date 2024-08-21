@@ -17,29 +17,30 @@ model User {
   id        String     @id @default(uuid())
   email     String     @unique
   password  String
+  fullName  String
   username  String     @unique
   gender    GenderEnum
   role      RoleEnum
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
-  Owner     Owner?
-  Manager   Manager?
+  owner     Owner?
+  manager   Manager?
 }
 
 model Owner {
-  id         String       @id
-  user       User         @relation(fields: [id], references: [id])
-  outletCafe OutletCafe[]
+  id   String @id
+  user User   @relation(fields: [id], references: [id])
+  cafe Cafe[]
 }
 
 model Manager {
-  id           String      @id
-  user         User        @relation(fields: [id], references: [id])
-  outletCafe   OutletCafe? @relation(fields: [outletCafeId], references: [id])
-  outletCafeId String?
+  id     String  @id
+  user   User    @relation(fields: [id], references: [id])
+  cafe   Cafe?   @relation(fields: [cafeId], references: [id])
+  cafeId String?
 }
 
-model OutletCafe {
+model Cafe {
   id        String   @id @default(uuid())
   name      String
   address   String
@@ -50,17 +51,17 @@ model OutletCafe {
   ownerId   String?
 
   menu    Menu[]
-  Manager Manager[]
+  manager Manager[]
 }
 
 model Menu {
-  id            String       @id @default(uuid())
+  id            String   @id @default(uuid())
   name          String
   price         Float
   isRecommended Boolean
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  outletCafe    OutletCafe[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  cafe          Cafe[]
 }
 
 enum GenderEnum {
