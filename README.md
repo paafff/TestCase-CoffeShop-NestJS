@@ -34,7 +34,11 @@ $ npm install
 
 ## Running the app
 
+Using Npm
 ```bash
+# initialize setup database with prisma and running the project in watch mode,
+$ npm run clean:run
+
 # development
 $ npm run start
 
@@ -43,6 +47,15 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+```
+
+Using Docker
+```bash
+# Build and start the containers
+$ docker-compose up --build
+
+# Stop the containers
+$ docker-compose down
 ```
 
 ## Test
