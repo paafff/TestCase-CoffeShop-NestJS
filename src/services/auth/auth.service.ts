@@ -46,7 +46,9 @@ export class AuthService {
 
     return {
       ...user,
-      accessToken: this.jwtService.sign(payload, { expiresIn: '60s' }),
+      //this is the access token expires in 60 seconds
+      accessToken: this.jwtService.sign(payload, { expiresIn: '6000s' }),
+      //this is the refresh token expires in 7 days
       refreshToken: this.jwtService.sign(payload, { expiresIn: '7d' }),
     };
   }

@@ -5,8 +5,8 @@ import { LocalStrategy } from './strategies/local-strategy';
 import { JwtStrategy } from './strategies/jwt-strategy';
 import { RefreshJwtStrategy } from './strategies/refreshToken.strategy';
 import { AuthController } from './auth.controller';
-import { UsersModule } from '../user/user.module';
 import { PrismaModule } from '../prisma/prisma.module';
+import { UserModule } from '../user/user.module';
 
 @Module({
   providers: [
@@ -18,11 +18,12 @@ import { PrismaModule } from '../prisma/prisma.module';
   ],
   controllers: [AuthController],
   imports: [
-    UsersModule,
+    UserModule,
     PrismaModule,
     JwtModule.register({
       secret: `${process.env.JWT_SECRET}`,
-      signOptions: { expiresIn: '30s' },
+      // this is access token expiration time
+      signOptions: { expiresIn: '60s' },
     }),
   ],
 })

@@ -19,8 +19,8 @@ model User {
   password  String
   fullName  String
   username  String     @unique
-  gender    GenderEnum
-  role      RoleEnum
+  gender    GenderEnum @default(UNKNOWN)
+  role      RoleEnum   @default(MANAGER)
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   owner     Owner?
@@ -55,13 +55,14 @@ model Cafe {
 }
 
 model Menu {
-  id            String   @id @default(uuid())
+  id            Int      @id @default(autoincrement())
   name          String
   price         Float
-  isRecommended Boolean
+  isRecommended Boolean  @default(false)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  cafe          Cafe[]
+  cafe          Cafe     @relation(fields: [cafeId], references: [id])
+  cafeId        String
 }
 
 enum GenderEnum {

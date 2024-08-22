@@ -1,63 +1,47 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, IsString, IsEnum } from 'class-validator';
 import { GenderEnum, RoleEnum } from '@prisma/client';
+import { IsOptional } from 'class-validator';
 
-export class UpdateUserDto {
-  @IsOptional()
-  @IsString()
+export class CreateUserDto {
   @ApiProperty({
     example: 'user@example.com',
     description: 'Email address of the user',
     format: 'email',
-    required: false,
   })
-  email?: string;
+  email: string;
 
-  @IsOptional()
-  @IsString()
   @ApiProperty({
     example: 'password123',
     description: 'Password for the user account',
     minLength: 6,
-    required: false,
   })
-  password?: string;
+  password: string;
 
-  @IsOptional()
-  @IsString()
   @ApiProperty({
     example: 'John Doe',
     description: 'Full name of the user',
-    required: false,
   })
-  fullName?: string;
+  fullName: string;
 
-  @IsOptional()
-  @IsString()
   @ApiProperty({
     example: 'johndoe',
     description: 'Username for the user account',
-    required: false,
   })
-  username?: string;
+  username: string;
 
   @IsOptional()
-  @IsEnum(GenderEnum)
   @ApiProperty({
     example: GenderEnum.MALE,
     description: 'Gender of the user',
     enum: GenderEnum,
-    required: false,
   })
-  gender?: GenderEnum;
+  gender: GenderEnum;
 
   @IsOptional()
-  @IsEnum(RoleEnum)
   @ApiProperty({
     example: RoleEnum.MANAGER,
     description: 'Role of the user in the system',
     enum: RoleEnum,
-    required: false,
   })
-  role?: RoleEnum;
+  role: RoleEnum;
 }
